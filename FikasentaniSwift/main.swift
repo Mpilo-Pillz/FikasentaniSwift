@@ -26,10 +26,34 @@ class Eagle: Bird {
     }
 }
 
+// the problem with inheritence comes when we have to create a penguin or chicken that cannot fly. That time a penguin can swim. Ducks are not an issue
+
+class Penguin: Bird {
+    func swim() {
+        print("The penguin peddles through water")
+    }
+}
+
+// creating as a struct cos we wont inherit anything
+struct FlyingMuseum {
+    func flyingDemo(flyingObject: Bird) {
+        flyingObject.fly()
+    }
+}
+
+
 let myEagle = Eagle()
 myEagle.fly()
 myEagle.layEgg()
 myEagle.soar()
+
+let myPenguin = Penguin()
+myPenguin.layEgg()
+myPenguin.swim()
+myPenguin.fly() // that is a problem
+
+let museum = FlyingMuseum()
+museum.flyingDemo(flyingObject: myEagle)
 
 
 
