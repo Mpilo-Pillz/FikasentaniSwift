@@ -5,71 +5,73 @@
 //  Created by Mpilo Pillz on 2022/11/03.
 //
 
-protocol CanFly {
-    // for you to be able to fly you need to be able to have these methods
-    func fly()
+protocol AdvancedLifeSupport {
+//    Whom ever (class or struct) uses this protocol, to comply they must implement this function below
+    func performCPR()
 }
 
-class Bird {
+class EmergencyCallHandler {
+    var delegate: AdvancedLifeSupport?
     
-    var isFemale = true
-    
-    func layEgg() {
-        if isFemale {
-            print("Bird makes new bird in a shell")
-        }
-    }
-}
-
-class Eagle: Bird, CanFly {
-    func fly() {
-        print("The Eagle flaps its wings and lifts off into the sky")
+    func assessSituation() {
+        print("Can you tell me what happened")
     }
     
-    func soar() {
-        print("The eagle glided in the air using air currents.")
+    func medicalEmergency() {
+//         this func will call upon the delegate whom ever it may be they do not call
+//        it will say "who ever is on call whoever is carryong the pager, prlease perform CPR"
+        delegate?.performCPR()
     }
 }
 
-// the problem with inheritence comes when we have to create a penguin or chicken that cannot fly. That time a penguin can swim. Ducks are not an issue
+struct Paramedic: AdvancedLifeSupport {
+    // when the paramedic goes on shitf (when initialized)
+    // they get told who the handler is (hndler is the emergenctCall handler
+    init(handler: EmergencyCallHandler) {
+        // the first thing they do is pick up the bleep
+        // and set the handlers delegate property as themselves
+        handler.delegate = self
+        
+    }
+    
+    func performCPR() {
+        print("The paramedic does chest compressions, 30 per second.")
+    }
+    
+    
+}
 
-class Penguin: Bird {
-    func swim() {
-        print("The penguin peddles through water")
+class Doctor: AdvancedLifeSupport {
+    
+    // Doctors set themselves as the handler
+    init(handler: EmergencyCallHandler) {
+        handler.delegate = self
+    }
+    
+    func performCPR() {
+        print("The doctor does chest compressions, 30 per second")
+    }
+    
+    func useStethescope() {
+        print("Listening for heart sounds")
     }
 }
 
-// creating as a struct cos we wont inherit anything
-struct FlyingMuseum {
-    func flyingDemo(flyingObject: CanFly) {
-        flyingObject.fly()
+class Surgeon: Doctor {
+    override func performCPR() {
+        super.performCPR()
+        print("Sings staying alive by the BeeGees")
+    }
+    
+    func useElectricDrill() {
+        print("Whirr...")
     }
 }
 
-struct Airplane: CanFly {
-    func fly() {
-        print("The airplane uses its enging to lift off into the air")
-    }
-}
+let hlonphile = EmergencyCallHandler()
+//let phetsile = Paramedic(handler: hlonphile)
 
+let kwanele = Surgeon(handler: hlonphile)
 
-
-let myEagle = Eagle()
-myEagle.fly()
-myEagle.layEgg()
-myEagle.soar()
-
-let myPenguin = Penguin()
-myPenguin.layEgg()
-myPenguin.swim()
-
-let myPlane = Airplane()
-
-let museum = FlyingMuseum()
-museum.flyingDemo(flyingObject: myEagle)
-museum.flyingDemo(flyingObject: myPlane)
-//museum.flyingDemo(flyingObject: myPenguin) // that cant happen
-
-
-
-
+hlonphile.assessSituation()
+hlonphile.medicalEmergency() // calls deligate.performCPR
