@@ -6,10 +6,18 @@
 ////
 //
 ////
-//protocol CanFly {
-//    // for you to be able to fly you need to be able to have these methods
-//    func fly()
-//}
+protocol CanFly {
+    // for you to be able to fly you need to be able to have these methods
+    func fly()
+}
+
+// extending protocols
+extension CanFly {
+    func fly() {
+        print("The object takes off into the air")
+    }
+}
+//end of
 //
 //class Bird {
 //    
@@ -65,8 +73,10 @@
 //myPenguin.swim()
 //
 //let myPlane = Airplane()
-//
+// myplane.fly // from the extended protocol
 //let museum = FlyingMuseum()
 //museum.flyingDemo(flyingObject: myEagle)
 //museum.flyingDemo(flyingObject: myPlane)
 ////museum.flyingDemo(flyingObject: myPenguin) // that cant happen
+///
+///
